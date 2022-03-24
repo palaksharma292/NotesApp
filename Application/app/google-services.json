@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "22516346040",
+    "project_id": "notes-app-44cf3",
+    "storage_bucket": "notes-app-44cf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22516346040:android:d3b04f02831c78b410184d",
+        "android_client_info": {
+          "package_name": "com.palaksharma.notesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22516346040-ce1j6qqgtdf2u9cmovjk5l3l64oje4os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnEKC3NRP4Lr909Hc0neJqVqB1lB6-ibo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22516346040-ce1j6qqgtdf2u9cmovjk5l3l64oje4os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
