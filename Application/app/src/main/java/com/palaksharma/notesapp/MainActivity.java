@@ -5,6 +5,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     CRUD backend=new CRUD();
@@ -18,5 +21,6 @@ public class MainActivity extends AppCompatActivity {
     {
         backend.addNote();
     }
+    public void GetList(View view){ List<Map<String, Object>> list= backend.getAllNotes(); }
 
 }

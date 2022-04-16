@@ -6,11 +6,16 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CRUD
@@ -63,5 +68,40 @@ public class CRUD
         }
     }
 
-
+    public List<Map<String,Object>> getAllNotes()
+    {
+        List<Map<String, Object>> NotesList= new ArrayList<>();
+        try
+        {
+            if(CheckConnection())
+            {
+                firestore.collection("Notes")
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                for (DocumentSnapshot document: queryDocumentSnapshots)
+                                {
+                                    Map<String, Object> note= new HashMap<>();
+                                    note.putAll(document.getData());
+                                    note.put("DocumentName", document.getId());
+                                    NotesList.add(note);
+                                    Log.i("List item", note.toString());
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i("Failure List item", "Could not get the list");
+                            }
+                        });
+            }
+        }
+        catch (Exception e)
+        {
+            Log.i("Error getting list", e.getMessage());
+        }
+        return NotesList;
+    }
 }
