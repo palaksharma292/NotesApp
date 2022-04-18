@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 import java.util.Map;
 
+//TODO user authentication with firestore: Palak(working on it)
+
 public class MainActivity extends AppCompatActivity {
 
     CRUD backend=new CRUD();
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void AddNote(View view)
     {
-        backend.addNote();
+       // backend.addNote();
     }
     //public void GetList(View view){ List<Map<String, Object>> list= backend.getAllNotes(); }
 

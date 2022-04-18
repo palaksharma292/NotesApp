@@ -8,8 +8,6 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,15 +20,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.xml.transform.Result;
 
+//TODO check error in line 234 (notify data set changed method) : Faizan
+//TODO Check CRUD methods added and give status update: Faizan
 public class CRUD
 {
     FirebaseFirestore firestore;
-    List<Note> notes;
+
     public boolean CheckConnection()
     {
         try
@@ -46,15 +44,15 @@ public class CRUD
         }
     }
 
-    public void addNote()
+    public void addNote(String Heading, String Content)
     {
         try
         {
             if(CheckConnection()) {
                 Map<String, Object> note = new HashMap<>();
-                note.put("Heading", "Note 2");
+                note.put("Heading", Heading);
                 note.put("Date", Calendar.getInstance().getTime());
-                note.put("Content", "Testing addition of notes");
+                note.put("Content", Content);
                 firestore.collection("Notes")
                         .add(note)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -117,6 +115,101 @@ public class CRUD
     }
 
  */
+
+    public void deleteNoteByID(String documentID)
+    {
+        try
+        {
+            if(CheckConnection())
+            {
+                firestore.collection("Notes").document(documentID)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.i("Success", "Note Deleted");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i("Failure", "Note deletion failed");
+                            }
+                        });
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, Object> getNoteByID(String documentID)
+    {
+        try
+        {
+            if(CheckConnection())
+            {
+                Map<String, Object> finalNote= new HashMap<>();
+                firestore.collection("Notes").document(documentID)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                finalNote.put("Heading", documentSnapshot.get("Heading"));
+                                finalNote.put("Content", documentSnapshot.get("Content"));
+                                finalNote.put("Date", documentSnapshot.get("Date"));
+                                finalNote.put("DocumentName", documentID);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i("Failure", "Note deletion failed");
+                            }
+                        });
+                return finalNote;
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateNote(String DocumentID, String Heading, String Content) {
+        try
+        {
+            Map<String, Object> note= new HashMap<>();
+            note.put("Heading", Heading);
+            note.put("Content", Content);
+            note.put("Date", Calendar.getInstance().getTime());
+
+            if(CheckConnection())
+            {
+                firestore.collection("Notes").document(DocumentID)
+                        .update(note)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.i("Success", "Note updated Successfully ");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i("Failure", "Note update failed ");
+                            }
+                        });
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public void EventChangeListener(NoteViewAdapter noteViewAdapter, ProgressDialog p,ArrayList<Note> notes)
     {
