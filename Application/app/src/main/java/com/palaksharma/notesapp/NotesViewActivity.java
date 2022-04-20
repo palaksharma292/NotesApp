@@ -63,8 +63,8 @@ public class NotesViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(noteViewAdapter);
 
         //Calling backend method and listening for changes in notes array.
-        backend.EventChangeListener(noteViewAdapter,progressDialog,notes);
-
+        //backend.EventChangeListener(noteViewAdapter,progressDialog,notes);
+        backend.getAllNotes(noteViewAdapter,progressDialog,notes);
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

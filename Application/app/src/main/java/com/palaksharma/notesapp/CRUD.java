@@ -2,12 +2,15 @@ package com.palaksharma.notesapp;
 
 import android.app.ProgressDialog;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,7 +32,7 @@ import java.util.Map;
 public class CRUD
 {
     FirebaseFirestore firestore;
-
+    Note addUpdate;
     public boolean CheckConnection()
     {
         try
@@ -74,10 +78,10 @@ public class CRUD
             Log.i("Error Adding Note", e.getMessage());
         }
     }
-/*
-    public  List<Map<String,Object>> getAllNotes()
+
+    public List<Note> getAllNotes(NoteViewAdapter noteViewAdapter, ProgressDialog p,ArrayList<Note> notes)
     {
-        List<Map<String, Object>> NotesList= new ArrayList<>();
+        //List<Map<String, Object>> NotesList= new ArrayList<>();
 
         //List<String>
         try
@@ -94,9 +98,15 @@ public class CRUD
                                     Map<String, Object> note= new HashMap<>();
                                     note.putAll(document.getData());
                                     note.put("DocumentName", document.getId());
-                                    NotesList.add(note);
-                                    Log.i("List item", note.toString());
+                                    //NotesList.add(note);
+
+                                    Note n = new Note();
+                                    n =Helper(note);
+                                    notes.add(n);
+                                    Log.e("LISTITEM", n.getDate().toString());
                                 }
+                                noteViewAdapter.notifyDataSetChanged();
+                                if(p.isShowing())  p.dismiss();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -111,10 +121,9 @@ public class CRUD
         {
             Log.i("Error getting list", e.getMessage());
         }
-        return NotesList;
+        return notes;
     }
 
- */
 
     public void deleteNoteByID(String documentID)
     {
@@ -144,13 +153,15 @@ public class CRUD
         }
     }
 
-    public Map<String, Object> getNoteByID(String documentID)
+    public Note getNoteByID(String documentID, TextView t1,TextView t2)
     {
         try
         {
             if(CheckConnection())
             {
+
                 Map<String, Object> finalNote= new HashMap<>();
+
                 firestore.collection("Notes").document(documentID)
                         .get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -161,6 +172,16 @@ public class CRUD
                                 finalNote.put("Content", documentSnapshot.get("Content"));
                                 finalNote.put("Date", documentSnapshot.get("Date"));
                                 finalNote.put("DocumentName", documentID);
+
+                                if(finalNote!=null)
+                                {
+
+                                    addUpdate = new Note();
+                                    addUpdate = Helper(finalNote);
+
+                                    t1.setText(addUpdate.getHeading());
+                                    t2.setText(addUpdate.getContent());
+                                }
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -169,7 +190,7 @@ public class CRUD
                                 Log.i("Failure", "Note deletion failed");
                             }
                         });
-                return finalNote;
+                return addUpdate;
             }
         }
         catch(Exception e)
@@ -230,7 +251,10 @@ public class CRUD
                             for(DocumentChange dc:value.getDocumentChanges()){
                                 if(dc.getType()== DocumentChange.Type.ADDED)
                                 {
+                                    String docId = dc.getDocument().get("DocumentName").toString();
                                     notes.add(dc.getDocument().toObject(Note.class));
+
+                                    Log.e("DOCUMMENT",docId);
                                 }
                                 noteViewAdapter.notifyDataSetChanged();
                                 if(p.isShowing())  p.dismiss();
@@ -240,4 +264,16 @@ public class CRUD
                     });
         }
     }
+
+    public Note Helper(Map<String,Object> note){
+        Note n = new Note();
+
+        n.setDocumentId(note.get("DocumentName").toString());
+        n.setHeading(note.get("Heading").toString());
+        n.setContent(note.get("Content").toString());
+        Timestamp t =(Timestamp) note.get("Date");
+        n.setDate(t);
+        return n;
+    }
+
 }

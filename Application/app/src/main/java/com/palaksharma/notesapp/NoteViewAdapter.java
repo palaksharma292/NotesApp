@@ -1,6 +1,7 @@
 package com.palaksharma.notesapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,16 +37,27 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder
     {
         TextView heading;
+        String DocumentId;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             heading = itemView.findViewById(R.id.note_heading);
+
             itemView.findViewById(R.id.cardView).setBackgroundColor(GetRandomColors());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.e("DOCUMENTID",DocumentId);
                     Log.e("HERE",heading.getText().toString());
+                    Intent i = new Intent(itemView.getContext(), AddNewNoteActivity.class);
+                    i.putExtra("DocumentId",DocumentId);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //add this line
+                    itemView.getContext().startActivity(i);
+
+
+
+
                 }
             });
         }
@@ -60,8 +72,9 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull NoteViewAdapter.MyViewHolder holder, int position) {
         Note n = notes.get(position);
-
+        holder.DocumentId = n.getDocumentId();
         holder.heading.setText(n.getHeading());
+
     }
 
     @Override
