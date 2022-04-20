@@ -1,5 +1,6 @@
 package com.palaksharma.notesapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +15,16 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.net.Inet4Address;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -28,7 +34,6 @@ public class NotesViewActivity extends AppCompatActivity {
 
     CRUD backend;
     RecyclerView recyclerView;
-    ArrayList<Note> notes;
     NoteViewAdapter noteViewAdapter;
     ProgressDialog progressDialog;
     @Override
@@ -54,11 +59,11 @@ public class NotesViewActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Creating notes array list
-        notes = new ArrayList<Note>();
+
+        ArrayList<Note> notes = new ArrayList<Note>();
 
         //creating custom adapter class object
         noteViewAdapter = new NoteViewAdapter(NotesViewActivity.this,notes);
-
         //Setting the adapter to recyclerView
         recyclerView.setAdapter(noteViewAdapter);
 
@@ -74,6 +79,50 @@ public class NotesViewActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressDialog.show();
+        ArrayList<Note> notes = new ArrayList<Note>();
+        //backend.EventChangeListener(noteViewAdapter,progressDialog,notes);
+
+        //notes = new ArrayList<>();
+        FirebaseFirestore firestore= FirebaseFirestore.getInstance();
+        firestore.collection("Notes").orderBy("Heading", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error!=null)
+                        {
+                            Log.e("Error","Could not retrieve newly added data");
+                            return;
+                        }
+                        for(DocumentSnapshot documentSnapshot: value)
+                        {
+                            if(documentSnapshot.exists())
+                            {
+                                //notes.add(documentSnapshot.toObject(Note.class));
+                                Note n = new Note();
+                                n.setDocumentId(documentSnapshot.getId()!=null ? documentSnapshot.getId():"");
+                                n.setHeading(documentSnapshot.get("Heading").toString());
+                                n.setContent(documentSnapshot.get("Content").toString());
+                                Timestamp t =(Timestamp) documentSnapshot.get("Date");
+                                n.setDate(t);
+                                n.setUser(documentSnapshot.get("UserId").toString());
+                                notes.add(n);
+                                Log.e("QUERYDOC",documentSnapshot.get("Heading").toString());
+                            }
+                        }
+
+                        noteViewAdapter.SwapList(notes);
+                        if(progressDialog.isShowing())  progressDialog.dismiss();
+                    }
+                });
+
+        //backend.getAllNotes(noteViewAdapter,progressDialog,notes);
     }
 
 

@@ -20,6 +20,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -37,9 +38,13 @@ public class CRUD
     FirebaseFirestore firestore;
 
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-    String userID= user.getUid();
+    String userID = user.getUid();
 
     Note addUpdate;
+    public  void CRUD()
+    {
+
+    }
     public boolean CheckConnection()
     {
         try
@@ -64,7 +69,7 @@ public class CRUD
                 note.put("Heading", Heading);
                 note.put("Date", Calendar.getInstance().getTime());
                 note.put("Content", Content);
-                note.put("User",userID);
+                note.put("UserId",userID);
                 firestore.collection("Notes")
                         .add(note)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -111,7 +116,8 @@ public class CRUD
                                     Note n = new Note();
                                     n =Helper(note);
                                     notes.add(n);
-                                    Log.e("LISTITEM", n.getDate().toString());
+                                    //UserId
+                                    Log.e("LISTITEM", document.getData().toString());
                                 }
                                 noteViewAdapter.notifyDataSetChanged();
                                 if(p.isShowing())  p.dismiss();
@@ -180,7 +186,7 @@ public class CRUD
                                 finalNote.put("Content", documentSnapshot.get("Content"));
                                 finalNote.put("Date", documentSnapshot.get("Date"));
                                 finalNote.put("DocumentName", documentID);
-                                finalNote.put("User", documentSnapshot.get("User"));
+                                finalNote.put("UserId", documentSnapshot.get("UserId"));
 
                                 if(finalNote!=null)
                                 {
@@ -216,7 +222,7 @@ public class CRUD
             note.put("Heading", Heading);
             note.put("Content", Content);
             note.put("Date", Calendar.getInstance().getTime());
-            note.put("User",userID);
+            note.put("UserId",userID);
             if(CheckConnection())
             {
                 firestore.collection("Notes").document(DocumentID)
@@ -241,7 +247,7 @@ public class CRUD
         }
     }
 
-    public void EventChangeListener(NoteViewAdapter noteViewAdapter, ProgressDialog p,ArrayList<Note> notes)
+    public void EventChangeListener1(NoteViewAdapter noteViewAdapter, ProgressDialog p,ArrayList<Note> notes)
     {
 
         if(CheckConnection())
@@ -258,12 +264,12 @@ public class CRUD
                                 return;
                             }
                             for(DocumentChange dc:value.getDocumentChanges()){
-                                if(dc.getType()== DocumentChange.Type.ADDED)
+                                if(dc.getType()== DocumentChange.Type.ADDED||dc.getType()== DocumentChange.Type.MODIFIED)
                                 {
-                                    String docId = dc.getDocument().get("DocumentName").toString();
+                                    //String docId = dc.getDocument().get("DocumentName").toString();
                                     notes.add(dc.getDocument().toObject(Note.class));
 
-                                    Log.e("DOCUMMENT",docId);
+                                   // Log.e("DOCUMMENT",docId);
                                 }
                                 noteViewAdapter.notifyDataSetChanged();
                                 if(p.isShowing())  p.dismiss();
@@ -274,15 +280,42 @@ public class CRUD
         }
     }
 
+    public void EventChangeListener(NoteViewAdapter noteViewAdapter, ProgressDialog p,ArrayList<Note> notes)
+    {
+
+        if(CheckConnection())
+        {
+            firestore.collection("Notes").orderBy("Heading", Query.Direction.ASCENDING)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            for(DocumentSnapshot documentSnapshot: value)
+                            {
+                                if(documentSnapshot.exists())
+                                {
+                                    //notes.add(documentSnapshot.toObject(Note.class));
+                                    Note n = Helper(documentSnapshot.getData());
+                                    notes.add(n);
+                                    Log.e("QUERYDOC",documentSnapshot.get("Heading").toString());
+                                }
+                            }
+                            noteViewAdapter.notifyDataSetChanged();
+                            if(p.isShowing())  p.dismiss();
+                        }
+                    });
+        }
+    }
     //TODO add userid
     public Note Helper(Map<String,Object> note){
         Note n = new Note();
 
-        n.setDocumentId(note.get("DocumentName").toString());
+        n.setDocumentId(note.get("DocumentName")!=null ? note.get("DocumentName").toString():"");
         n.setHeading(note.get("Heading").toString());
         n.setContent(note.get("Content").toString());
         Timestamp t =(Timestamp) note.get("Date");
         n.setDate(t);
+        n.setUser(note.get("UserId").toString());
+
         return n;
     }
 

@@ -9,10 +9,14 @@ public class Note {
     String Content;
     String Heading;
     Timestamp Date;
-    //TODO optimize based on userid
     String UserId;
-    Note(){}
 
+
+
+    Note(){}
+    public String getUser() {
+        return UserId;
+    }
     public String getContent() {
         return Content;
     }
@@ -29,11 +33,13 @@ public class Note {
         return DocumentId;
     }
 
-    public Note(String content, String heading, com.google.firebase.Timestamp date, String documentId) {
+
+    public Note(String content, String heading, com.google.firebase.Timestamp date, String documentId,String userId) {
         this.Content = content;
         this.Heading = heading;
         this.Date = date;
         this.DocumentId = documentId;
+        this.UserId = userId;
     }
 
     public void setContent(String content) {
@@ -50,5 +56,9 @@ public class Note {
 
     public void setDocumentId(String documentId) {
         DocumentId = documentId;
+    }
+
+    public void setUser(String userId) {
+        UserId = userId;
     }
 }

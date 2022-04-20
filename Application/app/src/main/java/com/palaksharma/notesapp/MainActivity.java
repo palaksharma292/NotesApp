@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +18,15 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    CRUD backend=new CRUD();
+    FirebaseAuth mAuth;
+    //CRUD backend=new CRUD();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(getApplicationContext(), NotesViewActivity.class);
-        startActivity(intent);
+
         ImageView leftIcon = findViewById(R.id.left_icon);
         leftIcon.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -31,7 +35,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();;
+        if(user==null)
+        {
+            startActivity(new Intent(MainActivity.this,UserLoginPage.class));
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(), NotesViewActivity.class);
+            startActivity(intent);
+        }
 
+    }
     public void AddNote(View view)
     {
        // backend.addNote();
