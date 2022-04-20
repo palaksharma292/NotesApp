@@ -9,6 +9,8 @@ public class Note {
     String Content;
     String Heading;
     Timestamp Date;
+    //TODO optimize based on userid
+    String UserId;
     Note(){}
 
     public String getContent() {

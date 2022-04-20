@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,9 +31,14 @@ import java.util.Map;
 
 //TODO check error in line 234 (notify data set changed method) : Faizan
 //TODO Check CRUD methods added and give status update: Faizan
+//TODO optimize based on userid
 public class CRUD
 {
     FirebaseFirestore firestore;
+
+    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    String userID= user.getUid();
+
     Note addUpdate;
     public boolean CheckConnection()
     {
@@ -57,6 +64,7 @@ public class CRUD
                 note.put("Heading", Heading);
                 note.put("Date", Calendar.getInstance().getTime());
                 note.put("Content", Content);
+                note.put("User",userID);
                 firestore.collection("Notes")
                         .add(note)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -172,6 +180,7 @@ public class CRUD
                                 finalNote.put("Content", documentSnapshot.get("Content"));
                                 finalNote.put("Date", documentSnapshot.get("Date"));
                                 finalNote.put("DocumentName", documentID);
+                                finalNote.put("User", documentSnapshot.get("User"));
 
                                 if(finalNote!=null)
                                 {
@@ -207,7 +216,7 @@ public class CRUD
             note.put("Heading", Heading);
             note.put("Content", Content);
             note.put("Date", Calendar.getInstance().getTime());
-
+            note.put("User",userID);
             if(CheckConnection())
             {
                 firestore.collection("Notes").document(DocumentID)
@@ -265,6 +274,7 @@ public class CRUD
         }
     }
 
+    //TODO add userid
     public Note Helper(Map<String,Object> note){
         Note n = new Note();
 
