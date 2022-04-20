@@ -7,22 +7,28 @@
     tools:context=".AddNewNoteActivity"
     android:orientation="vertical">
 
-    <TextView
+    <EditText
+        android:gravity="start"
         android:id="@+id/note_add_update_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints="Heading"
+        android:inputType="text"
         android:lines="2"
-        android:text="TextView"
-        />
+        android:minHeight="48dp"
+        android:text="@string/app_name"
+        tools:ignore="LabelFor,DuplicateSpeakableTextCheck" />
 
-    <TextView
+    <EditText
 
-        app:layout_constraintVertical_chainStyle="spread"
-        android:layout_height="0dp"
-        android:layout_weight="1"
         android:id="@+id/note_add_update_content"
         android:layout_width="match_parent"
-        android:text="TextView"
-        app:flow_horizontalAlign="center"
-        app:flow_verticalAlign="center"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:autofillHints="Content"
+        android:inputType="text"
+        android:text="@string/app_name"
+        app:layout_constraintVertical_chainStyle="spread"
+        android:gravity="start"
+        tools:ignore="LabelFor" />
 </LinearLayout>
