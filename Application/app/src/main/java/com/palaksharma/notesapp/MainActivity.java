@@ -2,6 +2,7 @@ package com.palaksharma.notesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();;
+        //Added for testing purpose
+        //FirebaseAuth.getInstance().signOut();
+
+        //Log.e("EMAIL",user.getEmail());
         if(user==null)
         {
             startActivity(new Intent(MainActivity.this,UserLoginPage.class));

@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserLoginPage extends AppCompatActivity implements View.OnClickListener {
 
@@ -61,7 +62,9 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.i("Success", "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    startActivity(new Intent(UserLoginPage.this,NotesViewActivity.class));
+
+                                    startActivity(new Intent(UserLoginPage.this,MainActivity.class));
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.i("Failure", "signInWithEmail:failure", task.getException());

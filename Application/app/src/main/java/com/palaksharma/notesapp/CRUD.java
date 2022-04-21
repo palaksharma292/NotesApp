@@ -77,6 +77,7 @@ public class CRUD
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.i("Success", "note added successfully");
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -102,7 +103,7 @@ public class CRUD
         {
             if(CheckConnection())
             {
-                firestore.collection("Notes")
+                firestore.collection("Notes").orderBy("Date",Query.Direction.ASCENDING)
                         .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
@@ -116,9 +117,12 @@ public class CRUD
 
                                     Note n = new Note();
                                     n =Helper(note);
-                                    notes.add(n);
+
+                                    if(n.UserId.equals(userID))
+                                        notes.add(n);
                                     //UserId
-                                    Log.e("LISTITEM", document.getData().toString());
+                                    Log.e("USERID",document.get("UserId").toString());
+                                    Log.e("USERIDNOTE",n.getUser());
                                 }
                                 noteViewAdapter.notifyDataSetChanged();
                                 if(p.isShowing())  p.dismiss();
@@ -287,7 +291,7 @@ public class CRUD
 
         if(CheckConnection())
         {
-            firestore.collection("Notes").orderBy("Heading", Query.Direction.ASCENDING)
+            firestore.collection("Notes").orderBy("Date", Query.Direction.ASCENDING)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -296,13 +300,24 @@ public class CRUD
                             {
                                 if(documentSnapshot.exists())
                                 {
-                                    //notes.add(documentSnapshot.toObject(Note.class));
-                                    Note n = Helper(Objects.requireNonNull(documentSnapshot.getData()));
-                                    notes.add(n);
-                                    Log.e("QUERYDOC", Objects.requireNonNull(documentSnapshot.get("Heading")).toString());
+
+                                    Note n = new Note();
+                                    n.setDocumentId(documentSnapshot.getId()!=null ? documentSnapshot.getId():"");
+                                    n.setHeading(documentSnapshot.get("Heading").toString());
+                                    n.setContent(documentSnapshot.get("Content").toString());
+                                    Timestamp t =(Timestamp) documentSnapshot.get("Date");
+                                    n.setDate(t);
+                                    n.setUser(documentSnapshot.get("UserId").toString());
+
+                                    if(n.getUser().equals(userID))
+                                        notes.add(n);
+                                    Log.e("USERID",documentSnapshot.get("UserId").toString());
+                                    Log.e("USERIDNOTE",n.getUser());
+
                                 }
                             }
-                            noteViewAdapter.notifyDataSetChanged();
+
+                            noteViewAdapter.SwapList(notes);
                             if(p.isShowing())  p.dismiss();
                         }
                     });

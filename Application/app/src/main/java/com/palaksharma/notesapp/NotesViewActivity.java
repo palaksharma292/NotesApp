@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -43,7 +44,13 @@ public class NotesViewActivity extends AppCompatActivity {
 
         //Hiding the back button as it is not required at this stage.
         findViewById(R.id.left_icon).setVisibility(View.GONE);
-
+        ImageView btnProf = findViewById(R.id.right_icon);
+        btnProf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NotesViewActivity.this,ProfileActivity.class));
+            }
+        });
         //Showing progress bar while data is being fetched.
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -87,9 +94,10 @@ public class NotesViewActivity extends AppCompatActivity {
         super.onResume();
         progressDialog.show();
         ArrayList<Note> notes = new ArrayList<Note>();
-        //backend.EventChangeListener(noteViewAdapter,progressDialog,notes);
-
-        //notes = new ArrayList<>();
+        //Added
+        backend.EventChangeListener(noteViewAdapter,progressDialog,notes);
+        //Added
+      /*
         FirebaseFirestore firestore= FirebaseFirestore.getInstance();
         firestore.collection("Notes").orderBy("Heading", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -121,7 +129,7 @@ public class NotesViewActivity extends AppCompatActivity {
                         if(progressDialog.isShowing())  progressDialog.dismiss();
                     }
                 });
-
+            */
         //backend.getAllNotes(noteViewAdapter,progressDialog,notes);
     }
 
