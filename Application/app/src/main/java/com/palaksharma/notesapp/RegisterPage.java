@@ -24,6 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterPage extends AppCompatActivity {
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
     private Button registerUser;
@@ -60,7 +64,15 @@ public class RegisterPage extends AppCompatActivity {
 
                                     if(CheckConnection())
                                     {
-                                        User u = new User(user.getUid(),email,password,null,null,null);
+                                        User u = new User(user.getUid(),email,password,"","","","");
+
+                                        Map<String, Object> mapUser= new HashMap<>();
+                                        mapUser.put("Email", u.Email);
+                                        mapUser.put("Address", u.Address);
+                                        mapUser.put("FirstName", u.FirstName);
+                                        mapUser.put("LastName", u.LastName);
+                                        mapUser.put("Password", u.Password);
+                                        mapUser.put("UserName", u.UserName);
                                         firestore.collection("Users")
                                                 .add(u)
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

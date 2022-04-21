@@ -2,6 +2,7 @@ package com.palaksharma.notesapp;
 
 import com.google.firebase.Timestamp;
 
+import java.io.Serializable;
 import java.util.Date;
 
 public class Note {

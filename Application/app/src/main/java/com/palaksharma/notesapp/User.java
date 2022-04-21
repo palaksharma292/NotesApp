@@ -1,21 +1,29 @@
 package com.palaksharma.notesapp;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     String UserName;
     String Email;
     String Password;
     String FirstName;
     String LastName;
     String Address;
+    String DocumentId;
 
     public User(){}
-    public User(String userName, String email, String password, String firstName, String lastName, String address) {
+    public User(String userName, String email, String password, String firstName, String lastName, String address,String documentId) {
         UserName = userName;
         Email = email;
         Password = password;
         FirstName = firstName;
         LastName = lastName;
         Address = address;
+        DocumentId = documentId;
+    }
+
+    public String getDocumentId() {
+        return DocumentId;
     }
 
     public String getUserName() {
@@ -64,5 +72,9 @@ public class User {
 
     public void setAddress(String address) {
         Address = address;
+    }
+
+    public void setDocumentId(String documentId) {
+        DocumentId = documentId;
     }
 }

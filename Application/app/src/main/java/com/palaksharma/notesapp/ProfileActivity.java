@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,13 +31,13 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
-    TextView UserName;
+    EditText UserName;
     EditText Address;
-    TextView Email;
+    EditText Email;
     EditText FirstName;
     EditText LastName;
-    TextView Password;
-
+    EditText Password;
+    User u;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class ProfileActivity extends AppCompatActivity {
         Password = findViewById(R.id.Password);
 
         ImageView btnProf = findViewById(R.id.right_icon);
+        disableEditText(UserName);
+        disableEditText(Email);
+        disableEditText(Password);
         //btnProf.setVisibility(View.GONE);
 
         btnProf.setImageResource(R.drawable.ic_logout);
@@ -61,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+
+
         ImageView btnBack = findViewById(R.id.left_icon);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +79,55 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         GetUserProfile();
+
+        findViewById(R.id.btnOpenUpdatePassowrd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileActivity.this, UpdateEmailOrPasswordActivity.class);
+
+                i.putExtra("USER_OBJ",u);
+                startActivity(i);
+            }
+        });
+
+        findViewById(R.id.btnSaveProfile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateProfile();
+            }
+        });
+}
+
+    private void UpdateProfile() {
+
+        if(CheckConnection())
+        {
+            Map<String,Object> mapUser = new HashMap<>();
+            String DocumentID = u.getDocumentId();
+            Log.i("DOCUMENTID", DocumentID);
+            u = new User(UserName.getText().toString(),Email.getText().toString(),Password.getText().toString(),FirstName.getText().toString(),LastName.getText().toString(),Address.getText().toString(),DocumentID);
+            mapUser.put("email", u.getEmail());
+            mapUser.put("address", u.getAddress());
+            mapUser.put("firstName", u.getFirstName());
+            mapUser.put("lastName", u.getLastName());
+            mapUser.put("password", u.getPassword());
+            mapUser.put("userName", u.getUserName());
+            firestore.collection("Users").document(DocumentID)
+                    .update(mapUser)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(ProfileActivity.this,"Profile updated!",Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ProfileActivity.this,"Could not update profile",Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+        }
     }
 
     public boolean CheckConnection()
@@ -114,6 +171,9 @@ public class ProfileActivity extends AppCompatActivity {
                                         FirstName.setText(user.get("firstName").toString());
                                         LastName.setText(user.get("lastName").toString());
                                         Password.setText(user.get("password").toString());
+
+
+                                        u = new User(UserName.getText().toString(),Email.getText().toString(),Password.getText().toString(),FirstName.getText().toString(),LastName.getText().toString(),Address.getText().toString(),user.get("DocumentName").toString());
                                     }
                                     Log.e("PROFILE",document.get("userName").toString());
                                     Log.e("PROFILEUSER",userID);
@@ -134,4 +194,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
     }
+    private void disableEditText(EditText editText) {
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+        editText.setBackgroundColor(Color.TRANSPARENT);
+    }
+
 }

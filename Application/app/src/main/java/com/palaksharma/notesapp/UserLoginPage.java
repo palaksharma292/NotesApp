@@ -27,7 +27,7 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
     private EditText password;
 
     FirebaseAuth mAuth= FirebaseAuth.getInstance();
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
