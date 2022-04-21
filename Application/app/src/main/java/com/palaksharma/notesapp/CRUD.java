@@ -2,7 +2,6 @@ package com.palaksharma.notesapp;
 
 import android.app.ProgressDialog;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -28,17 +26,20 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
-//TODO check error in line 234 (notify data set changed method) : Faizan
-//TODO Check CRUD methods added and give status update: Faizan
-//TODO optimize based on userid
 public class CRUD
 {
     FirebaseFirestore firestore;
 
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-    String userID = user.getUid();
+    String userID;
+
+    {
+        assert user != null;
+        userID = user.getUid();
+    }
 
     Note addUpdate;
     public  void CRUD()
@@ -109,7 +110,7 @@ public class CRUD
                                 for (DocumentSnapshot document: queryDocumentSnapshots)
                                 {
                                     Map<String, Object> note= new HashMap<>();
-                                    note.putAll(document.getData());
+                                    note.putAll(Objects.requireNonNull(document.getData()));
                                     note.put("DocumentName", document.getId());
                                     //NotesList.add(note);
 
@@ -263,6 +264,7 @@ public class CRUD
                                 Log.e("Error", error.getMessage());
                                 return;
                             }
+                            assert value != null;
                             for(DocumentChange dc:value.getDocumentChanges()){
                                 if(dc.getType()== DocumentChange.Type.ADDED||dc.getType()== DocumentChange.Type.MODIFIED)
                                 {
@@ -289,14 +291,15 @@ public class CRUD
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            assert value != null;
                             for(DocumentSnapshot documentSnapshot: value)
                             {
                                 if(documentSnapshot.exists())
                                 {
                                     //notes.add(documentSnapshot.toObject(Note.class));
-                                    Note n = Helper(documentSnapshot.getData());
+                                    Note n = Helper(Objects.requireNonNull(documentSnapshot.getData()));
                                     notes.add(n);
-                                    Log.e("QUERYDOC",documentSnapshot.get("Heading").toString());
+                                    Log.e("QUERYDOC", Objects.requireNonNull(documentSnapshot.get("Heading")).toString());
                                 }
                             }
                             noteViewAdapter.notifyDataSetChanged();
@@ -305,16 +308,15 @@ public class CRUD
                     });
         }
     }
-    //TODO add userid
     public Note Helper(Map<String,Object> note){
         Note n = new Note();
 
-        n.setDocumentId(note.get("DocumentName")!=null ? note.get("DocumentName").toString():"");
-        n.setHeading(note.get("Heading").toString());
-        n.setContent(note.get("Content").toString());
+        n.setDocumentId(note.get("DocumentName")!=null ? Objects.requireNonNull(note.get("DocumentName")).toString():"");
+        n.setHeading(Objects.requireNonNull(note.get("Heading")).toString());
+        n.setContent(Objects.requireNonNull(note.get("Content")).toString());
         Timestamp t =(Timestamp) note.get("Date");
         n.setDate(t);
-        n.setUser(note.get("UserId").toString());
+        n.setUser(Objects.requireNonNull(note.get("UserId")).toString());
 
         return n;
     }

@@ -1,10 +1,10 @@
 package com.palaksharma.notesapp;
 
-//TODO Make this the opening activity
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class UserLoginPage extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView register;
-    private Button loginbtn;
     private EditText email;
     private EditText password;
 
@@ -34,16 +32,17 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login_page);
 
-        register= (TextView) findViewById(R.id.openRegister);
+        TextView register = findViewById(R.id.openRegister);
         register.setOnClickListener(this);
 
-        loginbtn= (Button) findViewById(R.id.loginBtn);
+        Button loginbtn = findViewById(R.id.loginBtn);
         loginbtn.setOnClickListener(this);
-        email=(EditText) findViewById(R.id.loginEmail);
-        password=(EditText) findViewById(R.id.loginPassword);
+        email= findViewById(R.id.loginEmail);
+        password= findViewById(R.id.loginPassword);
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId())
@@ -62,13 +61,12 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.i("Success", "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    //TODO updateUI(user);
+                                    startActivity(new Intent(UserLoginPage.this,NotesViewActivity.class));
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.i("Failure", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(UserLoginPage.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                    //TODO updateUI(null);
+                                    Toast.makeText(UserLoginPage.this, "Invalid username or password..",
+                                            Toast.LENGTH_LONG).show();
                                 }
                             }
                         });

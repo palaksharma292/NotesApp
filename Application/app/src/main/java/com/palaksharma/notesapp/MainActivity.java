@@ -11,10 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.List;
-import java.util.Map;
-
-//TODO user authentication with firestore: Palak(working on it)
 
 public class MainActivity extends AppCompatActivity {
 

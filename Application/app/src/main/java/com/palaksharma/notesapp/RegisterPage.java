@@ -52,15 +52,15 @@ public class RegisterPage extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.i("Success", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    //TODO updateUI(user);
-                                    //Open login page again
+                                    startActivity(new Intent(RegisterPage.this,UserLoginPage.class));
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.i("Failure", "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(RegisterPage.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                     //TODO updateUI(null);
-                                    //Close UI or ???
+                                    Toast.makeText(RegisterPage.this, "Authentication failed. Try logging in if already registered.",
+                                            Toast.LENGTH_LONG).show();
+
+
                                 }
                             }
                         });
