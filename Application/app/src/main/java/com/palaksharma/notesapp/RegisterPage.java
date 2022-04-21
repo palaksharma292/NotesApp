@@ -83,7 +83,6 @@ public class RegisterPage extends AppCompatActivity {
 
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Log.i("Failure", "createUserWithEmail:failure", task.getException());
                                     Toast.makeText(RegisterPage.this, "Authentication failed. Try logging in if already registered.",
                                             Toast.LENGTH_LONG).show();
 

@@ -67,7 +67,6 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
 
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Log.i("Failure", "signInWithEmail:failure", task.getException());
                                     Toast.makeText(UserLoginPage.this, "Invalid username or password..",
                                             Toast.LENGTH_LONG).show();
                                 }
