@@ -3,6 +3,7 @@ package com.palaksharma.notesapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,10 +34,15 @@ public class RegisterPage extends AppCompatActivity {
     private Button registerUser;
     private TextView openLogin;
     private FirebaseFirestore firestore;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+
 
         openLogin=(TextView) findViewById(R.id.openLogin);
         openLogin.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +56,8 @@ public class RegisterPage extends AppCompatActivity {
         registerUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.setMessage("Fetching Data...");
+                progressDialog.show();
                 String email= ((EditText)findViewById(R.id.RegisterEmail)).getText().toString();
                 String password= ((EditText)findViewById(R.id.registerPassword)).getText().toString();
 
@@ -78,6 +86,8 @@ public class RegisterPage extends AppCompatActivity {
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
+                                                        if(progressDialog.isShowing())
+                                                            progressDialog.dismiss();
                                                         Toast.makeText(RegisterPage.this, "User Added",
                                                                 Toast.LENGTH_SHORT).show();
 
@@ -87,6 +97,8 @@ public class RegisterPage extends AppCompatActivity {
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
+                                                        if(progressDialog.isShowing())
+                                                            progressDialog.dismiss();
                                                         Toast.makeText(RegisterPage.this, "Could not add user",
                                                                 Toast.LENGTH_SHORT).show();
                                                     }
@@ -94,6 +106,9 @@ public class RegisterPage extends AppCompatActivity {
                                     }
 
                                 } else {
+
+                                    if(progressDialog.isShowing())
+                                        progressDialog.dismiss();
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(RegisterPage.this, "Authentication failed. Try logging in if already registered.",
                                             Toast.LENGTH_LONG).show();

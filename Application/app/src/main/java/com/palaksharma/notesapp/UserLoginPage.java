@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,13 +26,17 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
 
     private EditText email;
     private EditText password;
-
+    private ProgressDialog progressDialog;
     FirebaseAuth mAuth= FirebaseAuth.getInstance();
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login_page);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+
 
         TextView register = findViewById(R.id.openRegister);
         register.setOnClickListener(this);
@@ -46,6 +51,8 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
+        progressDialog.setMessage("Fetching Data...");
+        progressDialog.show();
         switch (view.getId())
         {
             case R.id.openRegister:
@@ -59,13 +66,13 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.i("Success", "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-
+                                    if(progressDialog.isShowing())
+                                        progressDialog.dismiss();
                                     startActivity(new Intent(UserLoginPage.this,MainActivity.class));
 
                                 } else {
+                                    if(progressDialog.isShowing())
+                                        progressDialog.dismiss();
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(UserLoginPage.this, "Invalid username or password..",
                                             Toast.LENGTH_LONG).show();
