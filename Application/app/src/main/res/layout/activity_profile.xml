@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".AddNewNoteActivity"
         android:orientation="vertical"
         >
@@ -19,51 +19,53 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:background="@color/backgroundLight"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:autofillHints="Username"
+                android:hint="@string/username"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:hint="User name"
                 tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck" />
 
             <EditText
                 android:id="@+id/Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:autofillHints="Password"
-                android:inputType="text"
-                android:hint="Email"
-                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                android:hint="@string/emailHint"
+                android:inputType="text|textEmailAddress"
+                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TextContrastCheck" />
 
             <EditText
                 android:id="@+id/Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:autofillHints="Password"
-                android:inputType="text"
-                android:hint="Password"
-                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                android:hint="@string/passwordHint"
+                android:inputType="text|textPassword"
+                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,TextContrastCheck" />
 
             <EditText
                 android:id="@+id/FirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:autofillHints="FirstName"
+                android:hint="@string/first_name"
                 android:inputType="text"
-                android:hint="First name"
                 android:minHeight="48dp"
                 tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck" />
 
@@ -71,40 +73,43 @@
                 android:id="@+id/Address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:autofillHints="Address"
+                android:hint="@string/your_address"
                 android:inputType="text"
-                android:hint="Address"
-                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TextContrastCheck" />
 
             <EditText
                 android:id="@+id/LastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:autofillHints="LastName"
-                android:hint="Last name"
+                android:hint="@string/last_name"
                 android:inputType="text"
-                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                tools:ignore="LabelFor,DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TextContrastCheck" />
 
             <Button
                 android:id="@+id/btnOpenUpdatePassowrd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_update_Password"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:backgroundTint="@color/purple_700"
-                android:textColor="@color/white"
-                />
+                android:text="@string/btn_update_Password"
+                android:textColor="@color/brightYellow"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/btnSaveProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_save_profile"
-                android:layout_margin="20dp"
+                android:layout_margin="15sp"
                 android:backgroundTint="@color/purple_700"
-                android:textColor="@color/white"
-                />
+                android:text="@string/btn_save_profile"
+                android:textColor="@color/brightYellow"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

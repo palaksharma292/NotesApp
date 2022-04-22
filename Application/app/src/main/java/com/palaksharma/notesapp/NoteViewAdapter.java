@@ -28,11 +28,8 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.MyView
         this.notes = notes;
     }
 
-    public static int GetRandomColors(){
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-
-        return color;
+    public static int GetColor(){
+        return Color.parseColor("#FAD775");
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder
     {
@@ -43,8 +40,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.MyView
 
             heading = itemView.findViewById(R.id.note_heading);
 
-            itemView.findViewById(R.id.cardView).setBackgroundColor(GetRandomColors());
-
+            itemView.findViewById(R.id.cardView).setBackgroundColor(GetColor());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -54,10 +50,6 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.MyView
                     i.putExtra("DocumentId",DocumentId);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //add this line
                     itemView.getContext().startActivity(i);
-
-
-
-
                 }
             });
         }

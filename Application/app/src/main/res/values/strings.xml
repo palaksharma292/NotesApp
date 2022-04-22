@@ -5,5 +5,17 @@
     <string name="update_password">Update Password</string>
     <string name="btn_update_Password">Update Password</string>
     <string name="btn_save_profile">Save</string>
+    <string name="emailHint">example@email.com</string>
+    <string name="passwordHint">password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="your_address">Your Address</string>
+    <string name="already_a_user_login">Already a user? login.</string>
+    <string name="register_user">Register User</string>
+    <string name="text_content">Text Content...</string>
+    <string name="text_heading">Text Heading...</string>
 
 </resources>

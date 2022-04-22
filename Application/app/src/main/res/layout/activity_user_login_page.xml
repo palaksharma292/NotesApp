@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/brightYellow"
+    android:backgroundTint="@color/brightYellow"
     tools:context=".UserLoginPage">
 
     <TextView
@@ -13,7 +15,8 @@
         android:layout_marginTop="27dp"
         android:layout_marginBottom="160dp"
         android:fontFamily="sans-serif-black"
-        android:text="Register"
+        android:text="@string/register"
+        android:textColor="@color/royalBlue"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,45 +30,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="example@email.com"
+        android:hint="@string/emailHint"
+        android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginName"
-        app:layout_constraintVertical_bias="0.134" />
+        app:layout_constraintVertical_bias="0.134"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/loginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="password"
+        android:hint="@string/passwordHint"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginName"
-        app:layout_constraintVertical_bias="0.274" />
+        app:layout_constraintVertical_bias="0.274"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="282dp"
         android:layout_height="48dp"
         android:layout_marginBottom="252dp"
-        android:text="Login"
+        android:backgroundTint="@color/royalBlue"
+        android:text="@string/login"
+        android:textColor="@color/brightYellow"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginPassword"
-        app:layout_constraintVertical_bias="0.897" />
+        app:layout_constraintVertical_bias="0.897"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/loginName"
@@ -73,7 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
         android:fontFamily="sans-serif-black"
-        android:text="Login Page"
+        android:text="@string/login"
+        android:textColor="@color/royalBlue"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

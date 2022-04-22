@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/brightYellow"
     tools:context=".RegisterPage">
 
     <EditText
@@ -12,14 +13,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/username"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerName" />
+        app:layout_constraintTop_toBottomOf="@+id/registerName"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/RegisterFirstName"
@@ -27,14 +31,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="First Name"
+        android:hint="@string/first_name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/RegisterUsername"
+        tools:ignore="TextContrastCheck"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/RegisterLastName"
@@ -42,14 +49,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Last Name"
+        android:hint="@string/last_name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterFirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/RegisterFirstName"
+        tools:ignore="TextContrastCheck"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/RegisterAddress"
@@ -57,14 +67,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Your Address"
+        android:hint="@string/your_address"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/RegisterLastName"
+        tools:ignore="TextContrastCheck"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/RegisterEmail"
@@ -72,14 +85,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="example@email.com"
+        android:hint="@string/emailHint"
+        android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/RegisterAddress"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/registerPassword"
@@ -87,14 +103,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="password"
+        android:hint="@string/passwordHint"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColor="@color/royalBlue"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/RegisterEmail"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/openLogin"
@@ -102,7 +121,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
-        android:text="Already a user? login."
+        android:text="@string/already_a_user_login"
+        android:textColor="@color/royalBlue"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +135,13 @@
         android:layout_width="282dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
-        android:text="Register User"
+        android:backgroundTint="@color/royalBlue"
+        android:text="@string/register_user"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/brightYellow"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPassword" />
@@ -126,7 +152,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-black"
-        android:text="Register Page"
+        android:text="@string/register"
+        android:textAlignment="center"
+        android:textColor="@color/royalBlue"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
