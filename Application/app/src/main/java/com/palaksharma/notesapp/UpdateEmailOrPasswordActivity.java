@@ -77,12 +77,12 @@ public class UpdateEmailOrPasswordActivity extends AppCompatActivity {
                         {
                             userObj.setPassword(txtPassword.getText().toString());
                             Map<String,Object> mapUser = new HashMap<>();
-                            mapUser.put("email", userObj.getEmail());
-                            mapUser.put("address", userObj.getAddress());
-                            mapUser.put("firstname", userObj.getFirstName());
-                            mapUser.put("lastName", userObj.getLastName());
-                            mapUser.put("password", userObj.getPassword());
-                            mapUser.put("userName", userObj.getUserName());
+                            mapUser.put("Email", userObj.getEmail());
+                            mapUser.put("Address", userObj.getAddress());
+                            mapUser.put("Firstname", userObj.getFirstName());
+                            mapUser.put("LastName", userObj.getLastName());
+                            mapUser.put("Password", userObj.getPassword());
+                            mapUser.put("UserName", userObj.getUserName());
                             firestore.collection("Users").document(userObj.DocumentId)
                                     .update(mapUser)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

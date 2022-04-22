@@ -68,7 +68,7 @@ public class UserLoginPage extends AppCompatActivity implements View.OnClickList
                                 if (task.isSuccessful()) {
                                     if(progressDialog.isShowing())
                                         progressDialog.dismiss();
-                                    startActivity(new Intent(UserLoginPage.this,MainActivity.class));
+                                    startActivity(new Intent(UserLoginPage.this,NotesViewActivity.class));
 
                                 } else {
                                     if(progressDialog.isShowing())
