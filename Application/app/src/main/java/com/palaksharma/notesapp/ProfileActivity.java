@@ -105,13 +105,15 @@ public class ProfileActivity extends AppCompatActivity {
             Map<String,Object> mapUser = new HashMap<>();
             String DocumentID = u.getDocumentId();
             Log.i("DOCUMENTID", DocumentID);
-            u = new User(UserName.getText().toString(),Email.getText().toString(),Password.getText().toString(),FirstName.getText().toString(),LastName.getText().toString(),Address.getText().toString(),DocumentID);
-            mapUser.put("email", u.getEmail());
-            mapUser.put("address", u.getAddress());
-            mapUser.put("firstName", u.getFirstName());
-            mapUser.put("lastName", u.getLastName());
-            mapUser.put("password", u.getPassword());
-            mapUser.put("userName", u.getUserName());
+            u = new User(UserName.getText().toString(),Email.getText().toString(),Password.getText().toString(),FirstName.getText().toString(),LastName.getText().toString(),Address.getText().toString(),userID,DocumentID);
+            mapUser.put("DocumentId",DocumentID);
+            mapUser.put("UserId", u.getUserID());
+            mapUser.put("Email", u.getEmail());
+            mapUser.put("Address", u.getAddress());
+            mapUser.put("FirstName", u.getFirstName());
+            mapUser.put("LastName", u.getLastName());
+            mapUser.put("Password", u.getPassword());
+            mapUser.put("UserName", u.getUserName());
             firestore.collection("Users").document(DocumentID)
                     .update(mapUser)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -160,22 +162,22 @@ public class ProfileActivity extends AppCompatActivity {
                                 {
                                     Map<String, Object> user= new HashMap<>();
                                     user.putAll(document.getData());
-                                    user.put("DocumentName", document.getId());
+                                    user.put("DocumentId", document.getId());
                                     //NotesList.add(note);
 
 
-                                    if(user.get("userName").equals(userID)) {
-                                        UserName.setText(user.get("userName").toString());
-                                        Address.setText(user.get("address").toString());
-                                        Email.setText(user.get("email").toString());
-                                        FirstName.setText(user.get("firstName").toString());
-                                        LastName.setText(user.get("lastName").toString());
-                                        Password.setText(user.get("password").toString());
+                                    if(user.get("UserId").equals(userID)) {
+                                        UserName.setText(user.get("UserName").toString());
+                                        Address.setText(user.get("Address").toString());
+                                        Email.setText(user.get("Email").toString());
+                                        FirstName.setText(user.get("FirstName").toString());
+                                        LastName.setText(user.get("LastName").toString());
+                                        Password.setText(user.get("Password").toString());
 
 
-                                        u = new User(UserName.getText().toString(),Email.getText().toString(),Password.getText().toString(),FirstName.getText().toString(),LastName.getText().toString(),Address.getText().toString(),user.get("DocumentName").toString());
+                                        u = new User(UserName.getText().toString(),Email.getText().toString(),Password.getText().toString(),FirstName.getText().toString(),LastName.getText().toString(),Address.getText().toString(),user.get("UserId").toString(),user.get("DocumentId").toString());
                                     }
-                                    Log.e("PROFILE",document.get("userName").toString());
+                                    Log.e("PROFILE",document.get("UserName").toString());
                                     Log.e("PROFILEUSER",userID);
                                 }
                             }
@@ -183,7 +185,7 @@ public class ProfileActivity extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ProfileActivity.this, "Coult not get user", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "Could not get user", Toast.LENGTH_SHORT).show();
                             }
                         });
             }

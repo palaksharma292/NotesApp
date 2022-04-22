@@ -15,8 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
-    //CRUD backend=new CRUD();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +34,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart()
     {
         super.onStart();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();;
-        //Added for testing purpose
-        //FirebaseAuth.getInstance().signOut();
-
-        //Log.e("EMAIL",user.getEmail());
-        if(user==null)
-        {
-            startActivity(new Intent(MainActivity.this,UserLoginPage.class));
-        }
-        else{
-            Intent intent = new Intent(getApplicationContext(), NotesViewActivity.class);
-            startActivity(intent);
-        }
+        startActivity(new Intent(MainActivity.this, UserLoginPage.class));
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        FirebaseAuth.getInstance().signOut();
+//
+//        //Log.e("EMAIL",user.getEmail());
+//        if(user==null)
+//        {
+//            startActivity(new Intent(MainActivity.this,UserLoginPage.class));
+//        }
+//        else{
+//            Intent intent = new Intent(getApplicationContext(), NotesViewActivity.class);
+//            startActivity(intent);
+//        }
 
     }
-    public void AddNote(View view)
-    {
-       // backend.addNote();
-    }
-    //public void GetList(View view){ List<Map<String, Object>> list= backend.getAllNotes(); }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().signOut();
+    }
 }

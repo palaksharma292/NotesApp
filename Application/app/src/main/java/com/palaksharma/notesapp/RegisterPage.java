@@ -1,8 +1,5 @@
 package com.palaksharma.notesapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,9 +23,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,21 +55,25 @@ public class RegisterPage extends AppCompatActivity {
             public void onClick(View view) {
                 progressDialog.setMessage("Fetching Data...");
                 progressDialog.show();
+
                 String email= ((EditText)findViewById(R.id.RegisterEmail)).getText().toString();
                 String password= ((EditText)findViewById(R.id.registerPassword)).getText().toString();
+                String username= ((EditText)findViewById(R.id.RegisterUsername)).getText().toString();
+                String firstname= ((EditText)findViewById(R.id.RegisterFirstName)).getText().toString();
+                String lastName= ((EditText)findViewById(R.id.RegisterLastName)).getText().toString();
+                String address= ((EditText)findViewById(R.id.RegisterAddress)).getText().toString();
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
                                     Log.i("Success", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
 
                                     if(CheckConnection())
                                     {
-                                        User u = new User(user.getUid(),email,password,"","","","");
+                                        User u = new User(username,email,password,firstname,lastName,address,user.getUid(),"");
 
                                         Map<String, Object> mapUser= new HashMap<>();
                                         mapUser.put("Email", u.Email);
@@ -81,8 +82,9 @@ public class RegisterPage extends AppCompatActivity {
                                         mapUser.put("LastName", u.LastName);
                                         mapUser.put("Password", u.Password);
                                         mapUser.put("UserName", u.UserName);
+                                        mapUser.put("UserId", u.UserID);
                                         firestore.collection("Users")
-                                                .add(u)
+                                                .add(mapUser)
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {

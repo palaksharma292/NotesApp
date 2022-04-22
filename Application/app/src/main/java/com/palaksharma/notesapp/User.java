@@ -10,10 +10,12 @@ public class User implements Serializable {
     String LastName;
     String Address;
     String DocumentId;
+    String UserID;
 
     public User(){}
-    public User(String userName, String email, String password, String firstName, String lastName, String address,String documentId) {
+    public User(String userName, String email, String password, String firstName, String lastName, String address,String userId,String documentId) {
         UserName = userName;
+        UserID=userId;
         Email = email;
         Password = password;
         FirstName = firstName;
@@ -28,6 +30,10 @@ public class User implements Serializable {
 
     public String getUserName() {
         return UserName;
+    }
+
+    public String getUserID() {
+        return UserID;
     }
 
     public String getEmail() {
@@ -52,6 +58,10 @@ public class User implements Serializable {
 
     public void setUserName(String userName) {
         UserName = userName;
+    }
+
+    public void setUserID(String userId) {
+        UserID = userId;
     }
 
     public void setEmail(String email) {
