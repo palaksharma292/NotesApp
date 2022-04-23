@@ -17,5 +17,6 @@
     <string name="register_user">Register User</string>
     <string name="text_content">Text Content...</string>
     <string name="text_heading">Text Heading...</string>
+    <string name="this_is_sample_text">This is sample text.</string>
 
 </resources>

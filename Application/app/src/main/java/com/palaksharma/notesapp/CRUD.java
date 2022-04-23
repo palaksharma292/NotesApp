@@ -42,7 +42,7 @@ public class CRUD
     }
 
     Note addUpdate;
-    public  void CRUD()
+    public CRUD()
     {
 
     }
@@ -275,7 +275,7 @@ public class CRUD
                                     //String docId = dc.getDocument().get("DocumentName").toString();
                                     notes.add(dc.getDocument().toObject(Note.class));
 
-                                   // Log.e("DOCUMMENT",docId);
+                                   // Log.e("DOCUMENT",docId);
                                 }
                                 noteViewAdapter.notifyDataSetChanged();
                                 if(p.isShowing())  p.dismiss();

@@ -11,24 +11,31 @@
         android:theme="@style/Theme.NotesApp">
         <activity
             android:name=".UpdateEmailOrPasswordActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".UserLoginPage"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".RegisterPage"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".AddNewNoteActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".NotesViewActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

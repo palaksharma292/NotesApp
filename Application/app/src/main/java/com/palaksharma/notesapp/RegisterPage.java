@@ -41,7 +41,7 @@ public class RegisterPage extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
 
-        openLogin=(TextView) findViewById(R.id.openLogin);
+        openLogin= findViewById(R.id.openLogin);
         openLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,7 @@ public class RegisterPage extends AppCompatActivity {
             }
         });
 
-        registerUser=(Button) findViewById(R.id.RegisterBtn);
+        registerUser= findViewById(R.id.RegisterBtn);
         registerUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundLight"
+    android:orientation="vertical"
+    tools:context=".AddNewNoteActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/actionbar"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/note_add_update_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="Heading"
+        android:gravity="start"
+        android:hint="@string/text_heading"
+        android:textSize="40sp"
+        android:inputType="text"
+        android:lines="2"
+        android:minHeight="80dp"
+        android:textColor="@color/BackgroundDark"
+        tools:ignore="LabelFor,DuplicateSpeakableTextCheck,TextContrastCheck" />
+
+    <EditText
+
+        android:id="@+id/note_add_update_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:autofillHints="Content"
+        android:textSize="40sp"
+        android:background="@color/backgroundLight"
+        android:gravity="start"
+        android:hint="@string/text_content"
+        android:inputType="text"
+        android:textColor="@color/BackgroundDark"
+        app:layout_constraintVertical_chainStyle="spread"
+        tools:ignore="LabelFor,TextContrastCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonDelete"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:fabCustomSize="120dp"
+        app:maxImageSize="70dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="@color/royalBlue"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        android:tint="@color/brightYellow"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+</LinearLayout>
