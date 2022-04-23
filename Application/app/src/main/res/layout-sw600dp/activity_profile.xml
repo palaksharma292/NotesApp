@@ -29,7 +29,7 @@
 
             <EditText
                 android:id="@+id/username"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25sp"
                 android:autofillHints="Username"
@@ -41,7 +41,7 @@
 
             <EditText
                 android:id="@+id/Email"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25sp"
                 android:textSize="40sp"
@@ -52,7 +52,7 @@
 
             <EditText
                 android:id="@+id/Password"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25sp"
                 android:textSize="40sp"
@@ -63,7 +63,7 @@
 
             <EditText
                 android:id="@+id/FirstName"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25sp"
                 android:textSize="40sp"
@@ -75,7 +75,7 @@
 
             <EditText
                 android:id="@+id/Address"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="40sp"
                 android:layout_margin="25sp"
@@ -86,7 +86,7 @@
 
             <EditText
                 android:id="@+id/LastName"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25sp"
                 android:textSize="40sp"
@@ -97,7 +97,7 @@
 
             <Button
                 android:id="@+id/btnOpenUpdatePassowrd"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25sp"
                 android:backgroundTint="@color/purple_700"
@@ -108,7 +108,7 @@
 
             <Button
                 android:id="@+id/btnSaveProfile"
-                android:layout_width="800dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25sp"
                 android:backgroundTint="@color/purple_700"
